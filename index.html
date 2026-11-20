@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rio 3D — Tour Interativo pela Cidade Maravilhosa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="./assets/index-aFNI3xBR.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-B7AvdOCZ.css">
+  </head>
+  <body>
+    <!-- Fullscreen 3D Canvas -->
+    <canvas id="scene-canvas" aria-label="Mapa 3D interativo do Rio de Janeiro"></canvas>
+
+    <!-- 3D Projected Landmark Hotspots -->
+    <div id="hotspots-layer" aria-hidden="false"></div>
+
+    <!-- Cinematic Loading Splash -->
+    <div id="loading-screen">
+      <div class="loader-card">
+        <div class="loader-wave"></div>
+        <h1>Rio de Janeiro <span>3D</span></h1>
+        <p>Preparando a Baía de Guanabara e os cartões-postais...</p>
+      </div>
+    </div>
+
+    <!-- HUD Overlay -->
+    <div id="hud">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <div class="brand glass">
+          <div class="brand-badge">RJ</div>
+          <div class="brand-text">
+            <span class="brand-title">Rio de Janeiro <strong>3D</strong></span>
+            <span class="brand-sub">Tour Interativo · Cidade Maravilhosa</span>
+          </div>
+        </div>
+
+        <div class="time-controls glass" role="group" aria-label="Horário do dia">
+          <button class="time-btn active" data-time="manha" title="Manhã Carioca">
+            <span>☀️</span><span class="btn-label">Manhã</span>
+          </button>
+          <button class="time-btn" data-time="tarde" title="Pôr do Sol em Ipanema">
+            <span>🌅</span><span class="btn-label">Pôr do Sol</span>
+          </button>
+          <button class="time-btn" data-time="crepusculo" title="Crepúsculo">
+            <span>🌆</span><span class="btn-label">Crepúsculo</span>
+          </button>
+          <button class="time-btn" data-time="noite" title="Noite no Rio com fogos em Copacabana">
+            <span>🌙</span><span class="btn-label">Noite</span>
+          </button>
+        </div>
+
+        <div class="action-controls glass">
+          <button id="btn-tour" class="action-btn primary" title="Iniciar ou pausar Tour Guiado (Espaço)">
+            <span id="tour-icon">▶</span>
+            <span id="tour-label">Tour Guiado</span>
+          </button>
+          <button id="btn-overview" class="action-btn" title="Vista Panorâmica (O)">
+            <span>🗺️</span><span class="btn-label">Panorâmica</span>
+          </button>
+          <button id="btn-orbit" class="action-btn" title="Alternar rotação suave da câmera">
+            <span>🔄</span>
+          </button>
+          <button id="btn-audio" class="action-btn" title="Som ambiente das ondas e brisa carioca">
+            <span>🔇</span>
+          </button>
+          <button id="btn-cinema" class="action-btn" title="Ocultar interface (H)">
+            <span>👁️</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Guided Tour Progress Bar -->
+      <div id="tour-progress-bar" class="hidden">
+        <div id="tour-progress-fill"></div>
+      </div>
+
+      <!-- Landmark Detail Card -->
+      <aside id="info-card" class="glass hidden" aria-live="polite">
+        <div class="card-header">
+          <div class="card-badge">
+            <span id="card-dot" class="badge-dot"></span>
+            <span id="card-category">Maravilha do Mundo</span>
+          </div>
+          <button id="btn-close-card" class="icon-close" title="Fechar painel">✕</button>
+        </div>
+
+        <h2 id="card-title">Cristo Redentor</h2>
+        <p id="card-neighborhood" class="card-neighborhood">Alto da Boa Vista · Corcovado</p>
+
+        <div id="card-stats" class="card-stats"></div>
+
+        <p id="card-description" class="card-description"></p>
+
+        <div class="card-curiosity">
+          <div class="curiosity-label">✨ Você sabia?</div>
+          <p id="card-curiosity-text"></p>
+        </div>
+
+        <div class="card-footer">
+          <button id="btn-prev" class="nav-btn">← Anterior</button>
+          <span id="card-counter" class="card-counter">1 / 7</span>
+          <button id="btn-next" class="nav-btn">Próximo →</button>
+        </div>
+      </aside>
+
+      <!-- Welcome Hint Banner (shown on Overview) -->
+      <div id="overview-hint" class="glass">
+        <span class="pulse-dot"></span>
+        <span>Clique em um ponto turístico no mapa ou use a barra abaixo para voar até ele</span>
+      </div>
+
+      <!-- Mini-Map Radar -->
+      <div id="minimap-wrap" class="glass" title="Mapa radar interativo do Rio de Janeiro">
+        <canvas id="minimap-canvas" width="164" height="140"></canvas>
+        <div class="minimap-legend">
+          <span>N ↑</span>
+          <span id="minimap-coords">Baía de Guanabara</span>
+        </div>
+      </div>
+
+      <!-- Bottom Landmark Navigation Dock -->
+      <nav id="landmark-dock" class="glass" aria-label="Pontos turísticos do Rio de Janeiro"></nav>
+    </div>
+
+    <!-- Restore HUD button (only visible in Cinema Mode) -->
+    <button id="btn-restore-hud" class="glass hidden" title="Mostrar interface (H)">
+      👁️ Mostrar Interface
+    </button>
+
+  </body>
+</html>
